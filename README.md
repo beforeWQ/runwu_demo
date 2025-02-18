@@ -16,7 +16,7 @@
 1. 克隆项目并进入项目目录
 ```bash
 git clone 
-cd runwu
+cd runwu_demo
  ```
 
 2. 使用 Docker Compose 启动服务
