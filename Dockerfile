@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM dh-mirror.gitverse.ru/library/python:3.9-slim
 
 # 设置工作目录
 WORKDIR /runwu_demo
@@ -14,7 +14,7 @@ RUN apt-get update \
         python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# 复制项目文件
+# 安装 Python 包
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
