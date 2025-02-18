@@ -76,6 +76,7 @@ class SignUpView(APIView):
                 'error': '邮箱格式不正确'
             }, status=status.HTTP_400_BAD_REQUEST)
 
+
 class SignInView(APIView):
     def post(self, request):
         try:
@@ -134,6 +135,8 @@ class SignInView(APIView):
                 'message': '登录失败',
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 class MeView(APIView):
     permission_classes = [IsAuthenticated]
 
