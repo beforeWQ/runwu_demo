@@ -1,13 +1,9 @@
-version: '3'
-
 services:
   runwu_demo:
     build: .
     container_name: runwu_demo
     ports:
       - "8000:8000"
-    volumes:
-      - .:/runwu_demo
     environment:
       - DEBUG=1
       - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
