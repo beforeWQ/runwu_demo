@@ -10,32 +10,14 @@ from django.core.exceptions import ValidationError
 from .models import User
 import json
 
+from rest_framework.parsers import JSONParser, FormParser, MultiPartParser
 
 class SignUpView(APIView):
+    parser_classes = (JSONParser, FormParser, MultiPartParser)
+    
     def post(self, request):
         try:
-            # 处理不同格式的请求数据
-            if isinstance(request.data, dict):
-                if len(request.data) == 1 and isinstance(next(iter(request.data.keys())), str):
-                    # 处理 QueryDict 格式
-                    raw_data = next(iter(request.data.keys()), '{}')
-                    try:
-                        data = json.loads(raw_data)
-                    except (json.JSONDecodeError, UnicodeDecodeError):
-                        data = request.data
-                else:
-                    # 处理正常的 JSON 请求
-                    data = request.data
-            else:
-                raw_data = request.body.decode('utf-8')
-                try:
-                    data = json.loads(raw_data)
-                except (json.JSONDecodeError, UnicodeDecodeError):
-                    return Response(
-                        {'error': '无效的数据格式'}, 
-                        status=status.HTTP_400_BAD_REQUEST
-                    )
-            
+            data = request.data
             email = data.get('email', '')
             password = data.get('password', '')
             
@@ -78,29 +60,11 @@ class SignUpView(APIView):
 
 
 class SignInView(APIView):
+    parser_classes = (JSONParser, FormParser, MultiPartParser)
+    
     def post(self, request):
         try:
-            # 处理不同格式的请求数据
-            if isinstance(request.data, dict):
-                if len(request.data) == 1 and isinstance(next(iter(request.data.keys())), str):
-                    # 处理 QueryDict 格式
-                    raw_data = next(iter(request.data.keys()), '{}')
-                    try:
-                        data = json.loads(raw_data)
-                    except (json.JSONDecodeError, UnicodeDecodeError):
-                        data = request.data
-                else:
-                    # 处理正常的 JSON 请求
-                    data = request.data
-            else:
-                raw_data = request.body.decode('utf-8')
-                try:
-                    data = json.loads(raw_data)
-                except (json.JSONDecodeError, UnicodeDecodeError):
-                    return Response({
-                        'message': '登录失败',
-                        'error': '无效的数据格式'
-                    }, status=status.HTTP_400_BAD_REQUEST)
+            data = request.data
             email = data.get('email')
             password = data.get('password')
             
